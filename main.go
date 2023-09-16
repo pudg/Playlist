@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"pudg/Playlist/routes"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	fmt.Println("More comming soon...")
+	engine := gin.Default()
+	engine = routes.RegisterRoutes(engine)
+	engine.Run()
 }
