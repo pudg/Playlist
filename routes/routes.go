@@ -6,41 +6,48 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func createPlaylist(c *gin.Context) {
+//ID
+//Name
+//Creator
+//Links
+//Public
+
+func CreatePlaylist(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement POST playlists",
+		"message": "TODO: Implement POST playlist",
 	})
 }
 
-func playlistsAll(c *gin.Context) {
+func GetAllPlaylists(c *gin.Context) {
+
 	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement GET all playlists...",
+		"message": "TODO: Implement GET all playlist",
 	})
 }
 
-func playlistDetails(c *gin.Context) {
+func GetPlaylistDetails(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement GET playlist detail...",
+		"message": "TODO: Implement GET playlist details",
 	})
 }
 
-func updatePlaylist(c *gin.Context) {
-	c.JSON(http.StatusAccepted, gin.H{
+func UpdatePlaylist(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
 		"message": "TODO: Implement UPDATE playlist",
 	})
 }
 
-func deletePlaylist(c *gin.Context) {
-	c.JSON(http.StatusNoContent, gin.H{
+func DeletePlaylist(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
 		"message": "TODO: Implement DELETE playlist",
 	})
 }
 
 func RegisterRoutes(engine *gin.Engine) *gin.Engine {
-	engine.POST("/playlists", createPlaylist)
-	engine.GET("/playlists", playlistsAll)
-	engine.GET("/playlists/:id", playlistDetails)
-	engine.PUT("/playlists/:id", updatePlaylist)
-	engine.DELETE("/playlists/:id", deletePlaylist)
+	engine.POST("/playlists", CreatePlaylist)
+	engine.GET("/playlists", GetAllPlaylists)
+	engine.GET("/playlists/:id", GetPlaylistDetails)
+	engine.PUT("/playlists/:id", UpdatePlaylist)
+	engine.DELETE("/playlists/:id", DeletePlaylist)
 	return engine
 }
