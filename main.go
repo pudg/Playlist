@@ -5,12 +5,15 @@ import (
 
 	"pudg/Playlist/database"
 
+	"pudg/Playlist/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	engine := gin.Default()
-	engine = routes.RegisterRoutes(engine)
+	engine := gin.New()
 	database.ConnectDatabase()
+	middleware.InitMiddleware(engine)
+	routes.InitRoutes(engine)
 	engine.Run()
 }

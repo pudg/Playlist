@@ -6,6 +6,8 @@ replace pudg/routes => ./routes
 
 replace pudg/database => ./database
 
+replace pudg/middleware => ./middleware
+
 require github.com/gin-gonic/gin v1.9.1
 
 require (

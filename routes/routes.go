@@ -3,19 +3,20 @@ package routes
 import (
 	"net/http"
 	"pudg/Playlist/database"
+	"pudg/Playlist/models"
 
 	"github.com/gin-gonic/gin"
 )
 
 func CreatePlaylist(c *gin.Context) {
-	var input database.CreatePlaylistInput
+	var input models.CreatePlaylistInput
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	playlist := database.Playlist{
+	playlist := models.Playlist{
 		Name:    input.Name,
 		Creator: input.Creator,
 		Links:   input.Links,
@@ -28,9 +29,9 @@ func CreatePlaylist(c *gin.Context) {
 }
 
 func GetAllPlaylists(c *gin.Context) {
-	var playlists []database.Playlist
+	var playlists []models.Playlist
 
-	database.DB.Find(&playlists)
+	database.DB.Where("public = ?", true).Find(&playlists)
 
 	c.JSON(http.StatusOK, gin.H{
 		"data": playlists,
@@ -38,28 +39,49 @@ func GetAllPlaylists(c *gin.Context) {
 }
 
 func GetPlaylistDetails(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement GET playlist details",
-	})
+	var playlist models.Playlist
+
+	id := c.Param("id")
+	database.DB.Find(&playlist, id)
+
+	c.JSON(http.StatusOK, gin.H{"data": playlist})
 }
 
 func UpdatePlaylist(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement UPDATE playlist",
-	})
+	var input models.CreatePlaylistInput
+	var playlist models.Playlist
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	id := c.Param("id")
+
+	database.DB.Find(&playlist, id)
+
+	playlist.Name = input.Name
+	playlist.Creator = input.Creator
+	playlist.Links = input.Links
+	playlist.Public = input.Public
+
+	database.DB.Save(&playlist)
+
+	c.JSON(http.StatusOK, gin.H{"message": playlist})
 }
 
 func DeletePlaylist(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement DELETE playlist",
-	})
+	id := c.Param("id")
+
+	database.DB.Unscoped().Delete(&models.Playlist{}, id)
+
+	c.JSON(http.StatusNoContent, gin.H{})
 }
 
-func RegisterRoutes(engine *gin.Engine) *gin.Engine {
+func InitRoutes(engine *gin.Engine) {
 	engine.POST("/playlists", CreatePlaylist)
 	engine.GET("/playlists", GetAllPlaylists)
 	engine.GET("/playlists/:id", GetPlaylistDetails)
 	engine.PUT("/playlists/:id", UpdatePlaylist)
 	engine.DELETE("/playlists/:id", DeletePlaylist)
-	return engine
 }
