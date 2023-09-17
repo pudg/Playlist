@@ -2,26 +2,38 @@ package routes
 
 import (
 	"net/http"
+	"pudg/Playlist/database"
 
 	"github.com/gin-gonic/gin"
 )
 
-//ID
-//Name
-//Creator
-//Links
-//Public
-
 func CreatePlaylist(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement POST playlist",
-	})
+	var input database.CreatePlaylistInput
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	playlist := database.Playlist{
+		Name:    input.Name,
+		Creator: input.Creator,
+		Links:   input.Links,
+		Public:  input.Public,
+	}
+
+	database.DB.Create(&playlist)
+
+	c.JSON(http.StatusOK, gin.H{"data": playlist})
 }
 
 func GetAllPlaylists(c *gin.Context) {
+	var playlists []database.Playlist
+
+	database.DB.Find(&playlists)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "TODO: Implement GET all playlist",
+		"data": playlists,
 	})
 }
 
