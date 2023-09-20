@@ -11,7 +11,7 @@ Launch the server.
 
 	go run .
 
-Visit [http://0.0.0.0:9000/playlists](http://0.0.0.0:9000/playlists).
+Visit [http://0.0.0.0:8000/playlists](http://0.0.0.0:8000/playlists).
 
 See API [API Documentation](#api-documentation) for allowed CRUD operations.
 

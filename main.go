@@ -15,5 +15,5 @@ func main() {
 	database.ConnectDatabase()
 	middleware.InitMiddleware(engine)
 	routes.InitRoutes(engine)
-	engine.Run(":9000")
+	engine.Run(":8000")
 }
