@@ -8,12 +8,14 @@ replace pudg/database => ./database
 
 replace pudg/middleware => ./middleware
 
-require github.com/gin-gonic/gin v1.9.1
+require (
+	github.com/gin-gonic/gin v1.9.1
+	gorm.io/datatypes v1.2.0
+)
 
 require (
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
-	gorm.io/datatypes v1.2.0 // indirect
 	gorm.io/driver/mysql v1.5.1 // indirect
 )
 
