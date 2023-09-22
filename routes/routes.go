@@ -25,7 +25,7 @@ func CreatePlaylist(c *gin.Context) {
 
 	database.DB.Create(&playlist)
 
-	c.JSON(http.StatusOK, gin.H{"data": playlist})
+	c.JSON(http.StatusCreated, gin.H{"data": playlist})
 }
 
 func GetAllPlaylists(c *gin.Context) {
@@ -67,7 +67,7 @@ func UpdatePlaylist(c *gin.Context) {
 
 	database.DB.Save(&playlist)
 
-	c.JSON(http.StatusOK, gin.H{"message": playlist})
+	c.JSON(http.StatusOK, gin.H{"data": playlist})
 }
 
 func DeletePlaylist(c *gin.Context) {
@@ -78,10 +78,15 @@ func DeletePlaylist(c *gin.Context) {
 	c.JSON(http.StatusNoContent, gin.H{})
 }
 
-func InitRoutes(engine *gin.Engine) {
-	engine.POST("/playlists", CreatePlaylist)
-	engine.GET("/playlists", GetAllPlaylists)
-	engine.GET("/playlists/:id", GetPlaylistDetails)
-	engine.PUT("/playlists/:id", UpdatePlaylist)
-	engine.DELETE("/playlists/:id", DeletePlaylist)
+func InitRouter() *gin.Engine {
+	router := gin.New()
+	return router
+}
+
+func RegisterRoutes(router *gin.Engine) {
+	router.POST("/playlists", CreatePlaylist)
+	router.GET("/playlists", GetAllPlaylists)
+	router.GET("/playlists/:id", GetPlaylistDetails)
+	router.PUT("/playlists/:id", UpdatePlaylist)
+	router.DELETE("/playlists/:id", DeletePlaylist)
 }

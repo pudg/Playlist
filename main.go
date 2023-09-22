@@ -1,19 +1,15 @@
 package main
 
 import (
-	"pudg/Playlist/routes"
-
 	"pudg/Playlist/database"
-
 	"pudg/Playlist/middleware"
-
-	"github.com/gin-gonic/gin"
+	"pudg/Playlist/routes"
 )
 
 func main() {
-	engine := gin.New()
+	router := routes.InitRouter()
 	database.ConnectDatabase()
-	middleware.InitMiddleware(engine)
-	routes.InitRoutes(engine)
-	engine.Run(":8000")
+	middleware.InitMiddleware(router)
+	routes.RegisterRoutes(router)
+	router.Run(":8000")
 }

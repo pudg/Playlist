@@ -28,7 +28,7 @@ View Postman generated API documentation here [postman/playlist](https://documen
   - [X] Add Update playlist functionality (PUT)
   - [X] Add Delete playlist functionality (DELETE)
 - [X] Add database connectivity with API
-- [ ] Add API test harness
+- [X] Add API test harness
 - [ ] Add pagination
 - [ ] Add filtering
 - [ ] Deploy on AWS
